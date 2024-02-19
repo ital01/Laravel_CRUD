@@ -45,12 +45,12 @@
             @csrf
 
             <div class="mb-3">
-                <label for="nome" class="form-label">NOME</label>
+                <label for="nome" class="form-label fs-5">NOME</label>
                 <input type="text" id="nome" name="nome" class="form-control" required>
             </div>
 
             <div class="mb-3">
-                <label for="email" class="form-label">EMAIL</label>
+                <label for="email" class="form-label fs-5">EMAIL</label>
                 <input type="email" id="email" name="email" class="form-control" required>
             </div>
 
@@ -72,15 +72,15 @@
 
 <section class="container p-1" id="tabela">
 
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered">
 
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th class="text-center">Editar</th>
-                <th class="text-center">Excluir</th>
+                <th scope="col" class="bg-dark text-white fs-5">ID</th>
+                <th scope="col" class="bg-dark text-white fs-5">Nome</th>
+                <th scope="col" class="bg-dark text-white fs-5">Email</th>
+                <th scope="col" class="text-center bg-dark text-white fs-5">Editar</th>
+                <th scope="col" class="text-center bg-dark text-white fs-5">Excluir</th>
             </tr>
         </thead>
 
