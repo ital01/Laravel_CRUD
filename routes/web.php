@@ -18,18 +18,22 @@ use App\Models\Teste;
 
 Route::get('/', function (Request $request) {
     $searchTerm = $request->input('search');
+    $limit = $request->query('limit', 100);
+
+    $query = Teste::query();
 
     if ($searchTerm) {
-        $usuarios = Teste::where('id', 'like', "%$searchTerm%")
+        $query->where('id', 'like', "%$searchTerm%")
             ->orWhere('nome', 'like', "%$searchTerm%")
-            ->orWhere('email', 'like', "%$searchTerm%")
-            ->get();
-    } else {
-        $usuarios = Teste::all();
+            ->orWhere('email', 'like', "%$searchTerm%");
     }
 
+    $usuarios = $query->paginate($limit);
+
     return view('welcome', ['usuarios' => $usuarios]);
-})->name('search');;
+})->name('search');
+
+
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/enviar-form', function (Request $dados) {

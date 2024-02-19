@@ -10,7 +10,8 @@
 </head>
 
 <body class="bg-light">
-<section class="container">
+    
+<header class="container">
     @if (Route::has('login'))
         <div class="fixed-top p-4 text-right">
             @auth
@@ -67,6 +68,9 @@
             </form>
         </div>
     </div>
+</header>
+
+<section class="container p-1" id="tabela">
 
     <table class="table table-bordered table-striped">
 
@@ -103,6 +107,36 @@
         </tbody>
 
     </table>
+
+    <div class="text-center">
+        @if ($usuarios->onFirstPage())
+            <span class="btn btn-secondary disabled">Primeira Página</span>
+        @else
+            <a href="{{ $usuarios->url(1) }}#tabela" class="btn btn-primary">Primeira Página</a>
+        @endif
+
+        @if ($usuarios->previousPageUrl())
+            <a href="{{ $usuarios->previousPageUrl() }}#tabela" class="btn btn-primary">{{ $usuarios->currentPage() - 1 }}</a>
+        @else
+            <span class="btn btn-secondary disabled">Página Anterior</span>
+        @endif
+
+        @if ($usuarios->nextPageUrl())
+            <a href="{{ $usuarios->nextPageUrl() }}#tabela" class="btn btn-primary">{{ $usuarios->currentPage() + 1 }}</a>
+        @else
+            <span class="btn btn-secondary disabled">Próxima Página</span>
+        @endif
+
+        @if ($usuarios->hasMorePages())
+            <a href="{{ $usuarios->url($usuarios->lastPage()) }}#tabela" class="btn btn-primary">Última Página</a>
+        @else
+            <span class="btn btn-secondary disabled">Última Página</span>
+        @endif
+    </div>
+
+
+
+    <br />
 
     <form id="form-atualizar" action="" method="POST" style="display: none;">
         @csrf
