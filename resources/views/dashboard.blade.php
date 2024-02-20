@@ -13,7 +13,7 @@
 <body class="bg-light">
 
     @include('layouts.navigation')
-
+    
     <header class="container">
 
 
@@ -138,30 +138,41 @@
         </form>
 
         <script>
-            document.addEventListener('DOMContentLoaded', function                          const feedbackMessage = document.querySelector('                              if (feedb                                      setTime                                              feedbackMessage.st                    one';
-                                                      }
-                const editarButtons = document.                rAll('.editar-btn');
+            document.addEventListener('DOMContentLoaded', function () {
+                const feedbackMessage = document.querySelector('.alert');
+                if (feedbackMessage) {
+                    setTimeout(function () {
+                        feedbackMessage.style.display = 'none';
+                    }, 3000);
+                }
+                const editarButtons = document.querySelectorAll('.editar-btn');
 
-                                s.forEach(button => {
-                    butto                        click', function () {
-                        const otherEditButtons = document.querySelectorAll('.editar-btn:not([data-i                        bute('data-id') + '"])');
-                        other                        btn => btn.disabled = true);
+                editarButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const otherEditButtons = document.querySelectorAll('.editar-btn:not([data-id="' + this.getAttribute('data-id') + '"])');
+                        otherEditButtons.forEach(btn => btn.disabled = true);
 
-                        const otherDeleteButtons = document.querySelectorAll('.delete-btn:not                        getAttribute('data-id') + '"])');
-                                               forEach(btn => btn.disabled = true);
+                        const otherDeleteButtons = document.querySelectorAll('.delete-btn:not([data-id="' + this.getAttribute('data-id') + '"])');
+                        otherDeleteButtons.forEach(btn => btn.disabled = true);
 
-                            const id = this.getAttribute('data-id');
-                        const f                        rySelectorAll(`.editable[d                                                fields.forEach(field => {
-                                          getAttribute('contenteditable') === 'true') {
-                                    field.setAttribute('contenteditable', 'fa                                           field.classList.r                                                              this.innerText = 'Editar';
+                        const id = this.getAttribute('data-id');
+                        const fields = document.querySelectorAll(`.editable[data-id="${id}"]`);
 
-                                const                                 r(`.editable[data-field="nome"][data-id="${id}"]`).innerText;
-                                const                                tor(`.editable[data-field="email"][data-id="${id}"]`).innerText;
+                        fields.forEach(field => {
+                            if (field.getAttribute('contenteditable') === 'true') {
+                                field.setAttribute('contenteditable', 'false');
+                                field.classList.remove('editable-active');
+                                this.innerText = 'Editar';
 
-                                          .location                                /${id}?nome=${nome}&email=${email}`;
-                                                                         field.set                                 'true');
-                                             ss                        ctiv                                                        nerT= 'Salvar';
-                     }
+                                const nome = document.querySelector(`.editable[data-field="nome"][data-id="${id}"]`).innerText;
+                                const email = document.querySelector(`.editable[data-field="email"][data-id="${id}"]`).innerText;
+
+                                window.location.href = `dashboard/atualizar/${id}?nome=${nome}&email=${email}`;
+                            } else {
+                                field.setAttribute('contenteditable', 'true');
+                                field.classList.add('editable-active');
+                                this.innerText = 'Salvar';
+                            }
                         });
                     });
                 });
