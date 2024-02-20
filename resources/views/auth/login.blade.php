@@ -57,11 +57,13 @@
                                             }}</button>
                                         <hr>
                                         <div class="text-center p-2">
-                                            <a class="text-decoration-none" href="{{ route('password.request') }}">Esqueceu a
+                                            <a class="text-decoration-none"
+                                                href="{{ route('password.request') }}">Esqueceu a
                                                 senha?</a>
                                         </div>
                                         <div class="text-center p-2">
-                                            <a class="text-decoration-none" href="{{ route('register') }}">Criar uma conta!</a>
+                                            <a class="text-decoration-none" href="{{ route('register') }}">Criar uma
+                                                conta!</a>
                                         </div>
                                     </form>
                                     <hr>

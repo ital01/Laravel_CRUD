@@ -24,21 +24,21 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function (Request $request) {
         $searchTerm = $request->input('search');
         $limit = $request->query('limit', 100);
-    
+
         $query = Teste::query();
-    
+
         if ($searchTerm) {
             $query->where('id', 'like', "%$searchTerm%")
                 ->orWhere('nome', 'like', "%$searchTerm%")
                 ->orWhere('email', 'like', "%$searchTerm%");
         }
-    
+
         $usuarios = $query->paginate($limit);
-    
+
         return view('dashboard', ['usuarios' => $usuarios]);
     })->middleware(['auth', 'verified'])->name('dashboard');
-    
-    
+
+
     Route::post('/enviar-form', function (Request $dados) {
         Teste::create([
             'nome' => $dados->nome,

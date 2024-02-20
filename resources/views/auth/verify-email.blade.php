@@ -34,8 +34,9 @@
                                     <p class="text-justify mb-4 text-black lh-sm"> Antes de começar, você poderia
                                         verificar seu endereço de e-mail clicando no link
                                         que acabamos de enviar para você?</p>
-                                        
-                                        <p class="text-justify mb-4 text-black lh-sm"> Se você não recebeu o e-mail, ficaremos
+
+                                    <p class="text-justify mb-4 text-black lh-sm"> Se você não recebeu o e-mail,
+                                        ficaremos
                                         felizes em enviar outro.</p>
 
 

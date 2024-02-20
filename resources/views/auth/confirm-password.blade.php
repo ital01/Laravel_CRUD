@@ -30,18 +30,20 @@
                             <div class="col-lg-12">
                                 <div class="p-5 my-auto">
                                     <h1 class="text-justify mb-4 text-black fs-5 lh-sm">Segurança</h1>
-                                    <p class="text-justify mb-4 text-black lh-sm">Por favor, confirme sua senha antes de continuar.</p>
+                                    <p class="text-justify mb-4 text-black lh-sm">Por favor, confirme sua senha antes de
+                                        continuar.</p>
                                     <form method="POST" action="{{ route('password.confirm') }}">
                                         @csrf
 
                                         <!-- Password -->
                                         <div class="mb-3">
                                             <label for="password" class="form-label">Senha</label>
-                                            <input id="password" class="form-control" type="password" name="password" required autocomplete="current-password">
+                                            <input id="password" class="form-control" type="password" name="password"
+                                                required autocomplete="current-password">
                                             @if ($errors->has('password'))
-                                                <div class="text-danger">
-                                                    {{ $errors->first('password') }}
-                                                </div>
+                                            <div class="text-danger">
+                                                {{ $errors->first('password') }}
+                                            </div>
                                             @endif
                                         </div>
 
