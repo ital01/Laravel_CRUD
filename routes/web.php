@@ -17,7 +17,7 @@ use App\Models\Teste;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/dashboard');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -69,14 +69,29 @@ Route::middleware(['auth'])->group(function () {
         }
         return redirect('/dashboard')->with('error', 'Usuário não encontrado');
     })->name('excluir');
+
+    Route::get('/search', function (Request $request) {
+        $searchTerm = $request->input('search');
+        $limit = $request->query('limit', 100);
+
+        $query = Teste::query();
+
+        if ($searchTerm) {
+            $query->where('id', 'like', "%$searchTerm%")
+                ->orWhere('nome', 'like', "%$searchTerm%")
+                ->orWhere('email', 'like', "%$searchTerm%");
+        }
+
+        $usuarios = $query->paginate($limit);
+
+        return view('dashboard', ['usuarios' => $usuarios]);
+    })->middleware(['auth', 'verified'])->name('search');
 });
 
 Route::get('/dashboard', function () {
     $usuarios = Teste::paginate(10);
     return view('dashboard', ['usuarios' => $usuarios]);
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -19,11 +19,11 @@
                 onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#000'">Dashboard</a>
             @else
             <a href="{{ route('login') }}" class="font-weight-bold btn btn-outline-dark"
-                onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#000'">Log in</a>
+                onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#000'">Entrar</a>
 
             @if (Route::has('register'))
             <a href="{{ route('register') }}" class="ml-4 font-weight-bold btn btn-outline-dark"
-                onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#000'">Register</a>
+                onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#000'">Registrar-se</a>
             @endif
             @endauth
         </div>
