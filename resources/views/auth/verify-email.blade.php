@@ -1,31 +1,88 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
-    </div>
+<!DOCTYPE html>
+<html lang="pt-br">
 
-    @if (session('status') == 'verification-link-sent')
-        <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
-            {{ __('A new verification link has been sent to the email address you provided during registration.') }}
-        </div>
-    @endif
+<head>
 
-    <div class="mt-4 flex items-center justify-between">
-        <form method="POST" action="{{ route('verification.send') }}">
-            @csrf
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-            <div>
-                <x-primary-button>
-                    {{ __('Resend Verification Email') }}
-                </x-primary-button>
+    <title>Obrigado por se inscrever!</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+
+<body class="bg-gradient-primary d-flex align-items-center justify-content-center">
+
+    <div class="container w-75">
+
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9 w-50">
+
+                <div class="card o-hidden border-0 shadow-lg my-5 ">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="p-5 my-auto">
+
+                                    <h1 class="text-justify mb-4 text-black fs-5 lh-sm">Obrigado por se inscrever!</h1>
+                                    <p class="text-justify mb-4 text-black lh-sm"> Antes de começar, você poderia
+                                        verificar seu endereço de e-mail clicando no link
+                                        que acabamos de enviar para você?</p>
+                                        
+                                        <p class="text-justify mb-4 text-black lh-sm"> Se você não recebeu o e-mail, ficaremos
+                                        felizes em enviar outro.</p>
+
+
+                                    @if (session('status') == 'verification-link-sent')
+                                    <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
+                                        Um novo link de verificação foi enviado para o endereço de e-mail que você
+                                        forneceu durante o registro.
+                                    </div>
+                                    @endif
+
+                                    <div class="mt-4 flex items-center justify-between">
+                                        <form method="POST" action="{{ route('verification.send') }}">
+                                            @csrf
+
+                                            <div>
+                                                <button type="submit" class="btn btn-primary">
+                                                    Reenviar E-mail de Verificação
+                                                </button>
+                                            </div>
+                                        </form>
+                                        <hr>
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+
+                                            <button type="submit" class="btn btn-link">
+                                                Sair
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </form>
 
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
+        </div>
 
-            <button type="submit" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-                {{ __('Log Out') }}
-            </button>
-        </form>
     </div>
-</x-guest-layout>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
