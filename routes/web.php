@@ -16,61 +16,67 @@ use App\Models\Teste;
 |
 */
 
-Route::get('/', function (Request $request) {
-    $searchTerm = $request->input('search');
-    $limit = $request->query('limit', 100);
-
-    $query = Teste::query();
-
-    if ($searchTerm) {
-        $query->where('id', 'like', "%$searchTerm%")
-            ->orWhere('nome', 'like', "%$searchTerm%")
-            ->orWhere('email', 'like', "%$searchTerm%");
-    }
-
-    $usuarios = $query->paginate($limit);
-
-    return view('welcome', ['usuarios' => $usuarios]);
-})->name('search');
-
-
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function (Request $request) {
+        $searchTerm = $request->input('search');
+        $limit = $request->query('limit', 100);
+    
+        $query = Teste::query();
+    
+        if ($searchTerm) {
+            $query->where('id', 'like', "%$searchTerm%")
+                ->orWhere('nome', 'like', "%$searchTerm%")
+                ->orWhere('email', 'like', "%$searchTerm%");
+        }
+    
+        $usuarios = $query->paginate($limit);
+    
+        return view('dashboard', ['usuarios' => $usuarios]);
+    })->middleware(['auth', 'verified'])->name('dashboard');
+    
+    
     Route::post('/enviar-form', function (Request $dados) {
         Teste::create([
             'nome' => $dados->nome,
             'email' => $dados->email
         ]);
-        return redirect('/')->with('success', 'Usuário registrado com sucesso');
+        return redirect('/dashboard')->with('success', 'Usuário registrado com sucesso');
     });
 
-    Route::get('/editar/{id}', function ($id) {
+    Route::get('/dashboard/editar/{id}', function ($id) {
         $usuario = Teste::find($id);
         return view('editar', compact('usuario'));
     })->name('editar');
 
-    Route::get('/atualizar/{id}', function (Request $request, $id) {
+    Route::get('/dashboard/atualizar/{id}', function (Request $request, $id) {
         $usuario = Teste::find($id);
         $usuario->update([
             'nome' => $request->query('nome'),
             'email' => $request->query('email')
         ]);
-        return redirect('/')->with('success', 'Usuário editado com sucesso');
+        return redirect('/dashboard')->with('success', 'Usuário editado com sucesso');
     })->name('atualizar');
 
-    Route::delete('/excluir/{id}', function ($id) {
+    Route::delete('/dashboard/excluir/{id}', function ($id) {
         $usuario = Teste::find($id);
         if ($usuario) {
             $usuario->delete();
-            return redirect('/')->with('success', 'Usuário excluído com sucesso');
+            return redirect('/dashboard')->with('success', 'Usuário excluído com sucesso');
         }
-        return redirect('/')->with('error', 'Usuário não encontrado');
+        return redirect('/dashboard')->with('error', 'Usuário não encontrado');
     })->name('excluir');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $usuarios = Teste::paginate(10);
+    return view('dashboard', ['usuarios' => $usuarios]);
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
