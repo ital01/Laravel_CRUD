@@ -17,31 +17,25 @@
             Atualizar informações
         </h1>
 
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
             <div class="col">
                 <div class="p-4 bg-white dark:bg-gray-800 shadow rounded-lg">
-                    <div class="max-w-xl">
-                        @include('profile.partials.update-profile-information-form')
-                    </div>
+                    @include('profile.partials.update-profile-information-form')
                 </div>
             </div>
 
             <div class="col">
                 <div class="p-4 bg-white dark:bg-gray-800 shadow rounded-lg">
-                    <div class="max-w-xl">
-                        @include('profile.partials.update-password-form')
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="p-4 bg-white dark:bg-gray-800 shadow rounded-lg">
-                    <div class="max-w-xl">
-                        @include('profile.partials.delete-user-form')
-                    </div>
+                    @include('profile.partials.update-password-form')
                 </div>
             </div>
         </div>
+        <br>
+
+        <div class="p-4 bg-white dark:bg-gray-800 shadow rounded-lg">
+            @include('profile.partials.delete-user-form')
+        </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"

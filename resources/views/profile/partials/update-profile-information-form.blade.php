@@ -1,10 +1,18 @@
 <section>
     <header>
+            @if (session('status') === 'profile-updated')
+            <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
+                class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                {{ __('Informações do perfil atualizadas com sucesso') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
             {{ __('Informações do Perfil') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        <p class="py-2 mt-1 text-sm text-gray-600 dark:text-gray-400">
             {{ __("Atualize as informações do seu perfil e endereço de email.") }}
         </p>
     </header>
@@ -25,7 +33,7 @@
             @enderror
         </div>
 
-        <div class="mb-3">
+        <div class="py-2 mb-3">
             <label for="email" class="form-label">{{ __('Email') }}</label>
             <input id="email" name="email" type="email" class="form-control" value="{{ old('email', $user->email) }}" required autocomplete="username">
             @error('email')
@@ -49,16 +57,8 @@
             @endif
         </div>
 
-        <div class="mb-3">
+        <div class="py-2 mb-3">
             <button type="submit" class="btn btn-primary">{{ __('Salvar') }}</button>
-
-            @if (session('status') === 'profile-updated')
-            <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                class="alert alert-success alert-dismissible fade show mt-2" role="alert">
-                {{ __('Informações do perfil atualizadas com sucesso.') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
         </div>
     </form>
 </section>

@@ -4,8 +4,11 @@
             {{ __('Excluir Conta') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __('Uma vez que sua conta seja excluída, todos os seus recursos e dados serão permanentemente apagados. Antes de excluir sua conta, por favor faça o download de quaisquer dados ou informações que deseje manter.') }}
+        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400 text-justify">
+            {{ __('Uma vez que sua conta seja excluída, todos os seus recursos e dados serão permanentemente apagados.') }}
+        </p>
+        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400 text-justify">
+            {{ __('Antes de excluir sua conta, por favor faça o download de quaisquer dados ou informações que deseje manter.') }}
         </p>
     </header>
 
