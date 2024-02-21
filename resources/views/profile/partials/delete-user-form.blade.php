@@ -28,7 +28,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>{{ __('Uma vez que sua conta seja excluída, todos os seus recursos e dados serão permanentemente apagados. Por favor, digite sua senha para confirmar que você deseja excluir sua conta permanentemente.') }}</p>
+                        <p>{{ __('Uma vez que sua conta seja excluída, todos os seus recursos e dados serão permanentemente apagados.') }}</p>
+                        <p>{{ __('Por favor, digite sua senha para confirmar que você deseja excluir sua conta permanentemente.') }}</p>
                         <div class="mb-3">
                             <label for="password" class="form-label visually-hidden">{{ __('Senha') }}</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="{{ __('Senha') }}">
