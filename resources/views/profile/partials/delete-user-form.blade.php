@@ -1,17 +1,17 @@
 <section class="space-y-6">
     <header>
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {{ __('Delete Account') }}
+            {{ __('Excluir Conta') }}
         </h2>
 
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
+            {{ __('Uma vez que sua conta seja excluída, todos os seus recursos e dados serão permanentemente apagados. Antes de excluir sua conta, por favor faça o download de quaisquer dados ou informações que deseje manter.') }}
         </p>
     </header>
 
     <button type="button" class="btn btn-danger"
             data-bs-toggle="modal" data-bs-target="#confirmUserDeletionModal">
-        {{ __('Delete Account') }}
+        {{ __('Excluir Conta') }}
     </button>
 
     <div class="modal fade" id="confirmUserDeletionModal" tabindex="-1" aria-labelledby="confirmUserDeletionModalLabel" aria-hidden="true">
@@ -21,22 +21,22 @@
                 @method('delete')
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="confirmUserDeletionModalLabel">{{ __('Confirm Account Deletion') }}</h5>
+                        <h5 class="modal-title" id="confirmUserDeletionModalLabel">{{ __('Confirmar Exclusão de Conta') }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>{{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}</p>
+                        <p>{{ __('Uma vez que sua conta seja excluída, todos os seus recursos e dados serão permanentemente apagados. Por favor, digite sua senha para confirmar que você deseja excluir sua conta permanentemente.') }}</p>
                         <div class="mb-3">
-                            <label for="password" class="form-label visually-hidden">{{ __('Password') }}</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="{{ __('Password') }}">
+                            <label for="password" class="form-label visually-hidden">{{ __('Senha') }}</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="{{ __('Senha') }}">
                             @error('password')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
-                        <button type="submit" class="btn btn-danger">{{ __('Delete Account') }}</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancelar') }}</button>
+                        <button type="submit" class="btn btn-danger">{{ __('Excluir Conta') }}</button>
                     </div>
                 </div>
             </form>

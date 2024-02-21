@@ -1,11 +1,11 @@
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {{ __('Profile Information') }}
+            {{ __('Informações do Perfil') }}
         </h2>
 
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __("Update your account's profile information and email address.") }}
+            {{ __("Atualize as informações do seu perfil e endereço de email.") }}
         </p>
     </header>
 
@@ -18,7 +18,7 @@
         @method('patch')
 
         <div class="mb-3">
-            <label for="name" class="form-label">{{ __('Name') }}</label>
+            <label for="name" class="form-label">{{ __('Nome') }}</label>
             <input id="name" name="name" type="text" class="form-control" value="{{ old('name', $user->name) }}" required autofocus autocomplete="name">
             @error('name')
                 <div class="text-danger">{{ $message }}</div>
@@ -35,14 +35,14 @@
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div class="mt-2">
                     <p class="text-sm text-gray-800 dark:text-gray-200">
-                        {{ __('Your email address is unverified.') }}
+                        {{ __('Seu endereço de email não foi verificado.') }}
                         <button form="send-verification" class="btn btn-link">
-                            {{ __('Click here to re-send the verification email.') }}
+                            {{ __('Clique aqui para reenviar o email de verificação.') }}
                         </button>
                     </p>
                     @if (session('status') === 'verification-link-sent')
                         <p class="mt-2 font-medium text-sm text-success">
-                            {{ __('A new verification link has been sent to your email address.') }}
+                            {{ __('Um novo link de verificação foi enviado para o seu endereço de email.') }}
                         </p>
                     @endif
                 </div>
@@ -50,17 +50,15 @@
         </div>
 
         <div class="mb-3">
-            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+            <button type="submit" class="btn btn-primary">{{ __('Salvar') }}</button>
 
             @if (session('status') === 'profile-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600 dark:text-gray-400"
-                >{{ __('Saved.') }}</p>
-            @endif
+            <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
+                class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                {{ __('Informações do perfil atualizadas com sucesso.') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         </div>
     </form>
 </section>
