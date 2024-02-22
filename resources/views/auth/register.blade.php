@@ -30,7 +30,7 @@
                             <div class="col-lg-12">
                                 <div class="p-5 my-auto">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4 fs-2">Registrar-se</h1>
+                                        <h1 class="h4 mb-4 fs-2">Registrar-se</h1>
                                     </div>
                                     <form method="POST" action="{{ route('register') }}">
                                         @csrf

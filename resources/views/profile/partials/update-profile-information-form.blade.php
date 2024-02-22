@@ -8,11 +8,11 @@
             </div>
             @endif
 
-        <h2 class="text-lg font-medium text-gray-900 ">
+        <h2 class="text-lg font-medium">
             {{ __('Informações do Perfil') }}
         </h2>
 
-        <p class="py-2 mt-1 text-sm text-gray-600">
+        <p class="py-2 mt-1 text-sm">
             {{ __("Atualize as informações do seu perfil e endereço de email.") }}
         </p>
     </header>
@@ -42,7 +42,7 @@
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div class="mt-2">
-                    <p class="text-sm text-gray-800">
+                    <p class="text-sm">
                         {{ __('Seu endereço de email não foi verificado.') }}
                         <button form="send-verification" class="btn btn-link">
                             {{ __('Clique aqui para reenviar o email de verificação.') }}
