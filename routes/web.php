@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use App\Models\Teste;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Response;
 
 Route::get('/', function () {
     return redirect('/dashboard');
@@ -76,6 +77,33 @@ Route::middleware(['auth'])->group(function () {
     })->middleware(['auth', 'verified'])->name('search');
     
 });
+
+Route::get('/dashboard/usuarios-json', function () {
+    $usuarios = Teste::all(['id', 'nome', 'email']);
+
+    return Response::json([
+        'usuarios' => $usuarios
+    ]);
+});
+
+Route::get('/dashboard/usuarios-json', function (Request $request) {
+    $searchTerm = $request->input('search');
+    
+    $query = Teste::query();
+    
+    if ($searchTerm) {
+        $query->where('id', 'like', "%$searchTerm%")
+            ->orWhere('nome', 'like', "%$searchTerm%")
+            ->orWhere('email', 'like', "%$searchTerm%");
+    }
+    
+    $usuarios = $query->get(['id', 'nome', 'email']);
+    
+    return Response::json([
+        'usuarios' => $usuarios
+    ]);
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

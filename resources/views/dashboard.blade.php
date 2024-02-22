@@ -17,15 +17,22 @@
     <header class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
-
-
                 @if (session('success'))
                 <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
                     class="alert alert-success alert-dismissible fade show my-2" role="alert">
-                    {{ __('Informações do perfil atualizadas com sucesso') }}
+                    {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 @endif
+                
+                @if (session('error'))
+                <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
+                    class="alert alert-danger alert-dismissible fade show my-2" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endif
+                
     
                 <div class="card o-hidden border-0 shadow-lg my-2">
                     <div class="card-body">
