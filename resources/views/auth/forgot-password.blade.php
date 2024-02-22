@@ -27,7 +27,7 @@
                                 <div class="p-5 my-auto">
                                     <h1 class="text-justify mb-4 text-black fs-5 lh-sm">Esqueceu sua senha? Sem
                                         problemas!</h1>
-                                    <p class="text-justify mb-4 text-black lh-sm"> Apenas nos informe seu endereço de
+                                    <p class="text-justify mb-4 text-black lh-sm"> Nos informe seu endereço de
                                         e-mail e enviaremos um link para redefinição
                                         de senha que permitirá que você escolha uma nova.</p>
 

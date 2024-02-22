@@ -18,7 +18,7 @@
 
 <body class="bg-gradient-primary d-flex align-items-center justify-content-center">
 
-    <div class="container w-75">
+    <div class="container w-50">
 
         <div class="row justify-content-center">
 

@@ -41,13 +41,13 @@
 
 
                                     @if (session('status') == 'verification-link-sent')
-                                    <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
+                                    <div class="mb-4 font-medium text-sm text-green-600">
                                         Um novo link de verificação foi enviado para o endereço de e-mail que você
                                         forneceu durante o registro.
                                     </div>
                                     @endif
 
-                                    <div class="mt-4 flex items-center justify-between">
+                                    <div class="mt-4 flex justify-between">
                                         <form method="POST" action="{{ route('verification.send') }}">
                                             @csrf
 
