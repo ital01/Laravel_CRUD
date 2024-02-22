@@ -18,7 +18,7 @@
 
 <body class="bg-gradient-primary d-flex align-items-center justify-content-center">
 
-    <div class="container w-75">
+    <div class="container w-50">
 
         <div class="row justify-content-center">
 
@@ -31,13 +31,11 @@
                                 <div class="p-5 my-auto">
 
                                     <h1 class="text-justify mb-4 text-black fs-5 lh-sm">Obrigado por se inscrever!</h1>
-                                    <p class="text-justify mb-4 text-black lh-sm"> Antes de começar, você poderia
-                                        verificar seu endereço de e-mail clicando no link
+                                    <p class="text-justify mb-4 text-black lh-sm"> Você poderia
+                                        verificar seu e-mail clicando no link
                                         que acabamos de enviar para você?</p>
 
-                                    <p class="text-justify mb-4 text-black lh-sm"> Se você não recebeu o e-mail,
-                                        ficaremos
-                                        felizes em enviar outro.</p>
+                                    <p class="text-justify mb-4 text-black lh-sm"> Se você não recebeu o e-mail, solicite o reenvio.</p>
 
 
                                     @if (session('status') == 'verification-link-sent')

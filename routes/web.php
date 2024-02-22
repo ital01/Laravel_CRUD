@@ -1,25 +1,15 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\Teste;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect('/dashboard');
 });
 
+// Rotas do dashboard
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function (Request $request) {
         $searchTerm = $request->input('search');
@@ -37,7 +27,6 @@ Route::middleware(['auth'])->group(function () {
 
         return view('dashboard', ['usuarios' => $usuarios]);
     })->middleware(['auth', 'verified'])->name('dashboard');
-
 
     Route::post('/enviar-form', function (Request $dados) {
         Teste::create([
@@ -72,26 +61,21 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/search', function (Request $request) {
         $searchTerm = $request->input('search');
-        $limit = $request->query('limit', 100);
-
+    
         $query = Teste::query();
-
+    
         if ($searchTerm) {
             $query->where('id', 'like', "%$searchTerm%")
                 ->orWhere('nome', 'like', "%$searchTerm%")
                 ->orWhere('email', 'like', "%$searchTerm%");
         }
-
-        $usuarios = $query->paginate($limit);
-
+    
+        $usuarios = $query->paginate();
+    
         return view('dashboard', ['usuarios' => $usuarios]);
     })->middleware(['auth', 'verified'])->name('search');
+    
 });
-
-Route::get('/dashboard', function () {
-    $usuarios = Teste::paginate(10);
-    return view('dashboard', ['usuarios' => $usuarios]);
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

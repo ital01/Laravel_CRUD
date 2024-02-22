@@ -28,7 +28,7 @@
                     <div class="card-body p-0">
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="p-5 my-auto">
+                                <div class="py-4 px-5 my-auto">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4 fs-2">Bem-vindo de volta!</h1>
                                     </div>
@@ -56,12 +56,12 @@
                                         <button type="submit" class="btn btn-primary btn-user btn-block">{{ __('Entrar')
                                             }}</button>
                                         <hr>
-                                        <div class="text-center p-2">
+                                        <div class="text-center py-1">
                                             <a class="text-decoration-none"
                                                 href="{{ route('password.request') }}">Esqueceu a
                                                 senha?</a>
                                         </div>
-                                        <div class="text-center p-2">
+                                        <div class="text-center py-1">
                                             <a class="text-decoration-none" href="{{ route('register') }}">Criar uma
                                                 conta!</a>
                                         </div>
