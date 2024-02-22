@@ -14,7 +14,7 @@
     @include('layouts.navigation')
     <div class="container py-4 d-flex justify-content-center">
         <div class="w-75">
-            <h1 class="font-semibold text-xl leading-tight mb-4">
+            <h1 class="font-semibold text-xl mb-4">
                 Atualizar informações
             </h1>
     
