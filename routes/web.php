@@ -30,18 +30,15 @@ Route::middleware(['auth'])->group(function () {
     })->middleware(['auth', 'verified'])->name('dashboard');
 
     Route::get('/dashboard-search', function (Request $request) {
-        $searchID= $request->input('search_ID');
-        $limit = $request->query('limit', 100);
-
-        $query = Teste::query();
-
-        if ($searchID) {
-            $query->where('id', 'like', "%$searchID%");
+        $searchID = $request->input('search_ID');
+    
+        $usuario = Teste::where('id', $searchID)->first();
+    
+        if (!$usuario) {
+            return redirect('/dashboard')->with('error', 'Usuário não encontrado');
         }
-
-        $usuarios = $query->paginate($limit);
-
-        return view('dashboard', ['usuarios' => $usuarios]);
+    
+        return view('dashboard', ['usuarios' => collect([$usuario])]);
     })->middleware(['auth', 'verified'])->name('dashboard.search');
 
     Route::post('/enviar-form', function (Request $dados) {

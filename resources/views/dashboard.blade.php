@@ -33,7 +33,6 @@
             </div>
             @endif
             
-
             <div class="card o-hidden border-0 shadow-lg my-2 w-75">
                 <div class="card-body">
                     <div class="row">
@@ -43,24 +42,26 @@
                                     <div class="col-md-6 container d-flex align-items-center justify-content-center">
                                         <div class="w-75">
                                             <h3>Adicionar usuário</h3>
-                                            <form id="form" action="/enviar-form" method="POST" class="mb-4">
+                                            <form id="form" action="/enviar-form" method="POST" class="py-2">
                                                 @csrf
-                                                <div class="mb-3">
+                                                <div class="py-2">
                                                     <label for="nome" class="form-label fs-5">Nome</label>
                                                     <input type="text" id="nome" name="nome" class="form-control" required>
                                                 </div>
-                                                <div class="mb-3">
+                                                <div class="py-2">
                                                     <label for="email" class="form-label fs-5">Email</label>
                                                     <input type="email" id="email" name="email" class="form-control" required>
                                                 </div>
-                                                <button type="submit" class="btn btn-primary">Enviar</button>
+                                                <div class="py-3">
+                                                    <button type="submit" class="btn btn-primary">Enviar</button>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
                                     <div class="col-md-6 container d-flex align-items-center justify-content-center">
                                         <div class="w-75">
                                             <h3>Editar usuário pelo ID</h3>
-                                            <form action="{{ route('dashboard.search') }}" method="GET" class="mb-4 py-1">
+                                            <form action="{{ route('dashboard.search') }}" method="GET" class="py-1">
                                                 <div class="input-group">
                                                     <input type="number" name="search_ID" class="form-control" placeholder="Pesquisar por ID" oninput="validity.valid||(value='');" min="0">
                                                     <button type="submit" class="btn btn-primary">Buscar</button>
