@@ -37,8 +37,10 @@ Route::middleware(['auth'])->group(function () {
         if (!$usuario) {
             return redirect('/dashboard')->with('error', 'Usuário não encontrado');
         }
+
+        $usuarios = Teste::where('id', $searchID)->paginate(1);
     
-        return view('dashboard', ['usuarios' => collect([$usuario])]);
+        return view('dashboard', ['usuarios' => $usuarios]);
     })->middleware(['auth', 'verified'])->name('dashboard.search');
 
     Route::post('/enviar-form', function (Request $dados) {
@@ -54,11 +56,11 @@ Route::middleware(['auth'])->group(function () {
         return view('editar', compact('usuario'));
     })->name('editar');
 
-    Route::get('/dashboard/atualizar/{id}', function (Request $request, $id) {
+    Route::post('/dashboard/atualizar/{id}', function (Request $request, $id) {
         $usuario = Teste::find($id);
         $usuario->update([
-            'nome' => $request->query('nome'),
-            'email' => $request->query('email')
+            'nome' => $request->input('nome'),
+            'email' => $request->input('email')
         ]);
         return redirect('/dashboard')->with('success', 'Usuário editado com sucesso');
     })->name('atualizar');

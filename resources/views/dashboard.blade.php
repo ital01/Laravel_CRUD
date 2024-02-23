@@ -61,28 +61,29 @@
                                     <div class="col-md-6 container d-flex align-items-center justify-content-center">
                                         <div class="w-75">
                                             <h3>Editar usuário pelo ID</h3>
+                                            @foreach($usuarios as $usuario)
                                             <form action="{{ route('dashboard.search') }}" method="GET" class="py-1">
+                                            @endforeach
                                                 <div class="input-group">
                                                     <input type="number" name="search_ID" class="form-control" placeholder="Pesquisar por ID" oninput="validity.valid||(value='');" min="0">
                                                     <button type="submit" class="btn btn-primary">Buscar</button>
                                                 </div>
                                             </form>
-                                            <form id="form-atualizar" action="" method="POST">
+                                            <form id="form-atualizar" action="{{ route('atualizar', ['id' => $usuario->id]) }}" method="POST">
                                                 @csrf
                                                 @method('POST')
                                                 <div class="mb-3">
                                                     <label for="nome" class="form-label fs-5">Nome</label>
-                                                    <input name="nome" class="form-control" id="nome">
+                                                    <input name="nome" class="form-control" id="nome" value="{{ $usuario->nome }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="email" class="form-label fs-5">Email</label>
-                                                    <input name="email" class="form-control" id="email">
+                                                    <input name="email" class="form-control" id="email" value="{{ $usuario->email }}">
                                                 </div>
                                                 <button type="submit" class="btn btn-primary editar-btn">Editar</button>
                                             </form>
                                         </div>
-                                    </div>
-                                    
+                                    </div> 
                                 </div>
                             </div>
                         </div>
