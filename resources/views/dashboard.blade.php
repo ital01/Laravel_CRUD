@@ -19,7 +19,7 @@
 
             @if (session('success'))
             <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                class="alert alert-success alert-dismissible fade show my-2" role="alert">
+                class="alert alert-success alert-dismissible fade show my-2 w-50" role="alert">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -27,7 +27,7 @@
             
             @if (session('error'))
             <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                class="alert alert-danger alert-dismissible fade show my-2" role="alert">
+                class="alert alert-danger alert-dismissible fade show my-2 w-50" role="alert">
                 {{ session('error') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -40,7 +40,7 @@
                         <div class="col-lg-12">
                             <div class="">
                                 <div class="row">
-                                    <div class="col-md-6 container">
+                                    <div class="col-md-6 container d-flex align-items-center justify-content-center">
                                         <div class="w-75">
                                             <h3>Adicionar usuário</h3>
                                             <form id="form" action="/enviar-form" method="POST" class="mb-4">
@@ -57,7 +57,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 container">
+                                    <div class="col-md-6 container d-flex align-items-center justify-content-center">
                                         <div class="w-75">
                                             <h3>Editar usuário pelo ID</h3>
                                             <form action="{{ route('dashboard.search') }}" method="GET" class="mb-4 py-1">
@@ -81,6 +81,7 @@
                                             </form>
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
