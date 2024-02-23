@@ -29,6 +29,21 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard', ['usuarios' => $usuarios]);
     })->middleware(['auth', 'verified'])->name('dashboard');
 
+    Route::get('/dashboard-search', function (Request $request) {
+        $searchID= $request->input('search_ID');
+        $limit = $request->query('limit', 100);
+
+        $query = Teste::query();
+
+        if ($searchID) {
+            $query->where('id', 'like', "%$searchID%");
+        }
+
+        $usuarios = $query->paginate($limit);
+
+        return view('dashboard', ['usuarios' => $usuarios]);
+    })->middleware(['auth', 'verified'])->name('dashboard.search');
+
     Route::post('/enviar-form', function (Request $dados) {
         Teste::create([
             'nome' => $dados->nome,
