@@ -14,7 +14,7 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function (Request $request) {
         $searchTerm = $request->input('search');
-        $limit = $request->query();
+        $limit = $request->query('limit', 100);
 
         $query = Teste::query();
 
@@ -29,39 +29,6 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard', ['usuarios' => $usuarios]);
     })->middleware(['auth', 'verified'])->name('dashboard');
 
-    Route::get('/dashboard/usuarios-json', function (Request $request) {
-        $searchTerm = $request->input('search');
-        
-        $query = Teste::query();
-        
-        if ($searchTerm) {
-            $query->where('id', 'like', "%$searchTerm%")
-                ->orWhere('nome', 'like', "%$searchTerm%")
-                ->orWhere('email', 'like', "%$searchTerm%");
-        }
-        
-        $usuarios = $query->get(['id', 'nome', 'email']);
-        
-        return Response::json([
-            'usuarios' => $usuarios
-        ]);
-    });
-
-    Route::get('/dashboard-IDsearch', function (Request $request) {
-        $searchID= $request->input('search_ID');
-        $limit = $request->query('limit', 1);
-
-        $query = Teste::query();
-
-        if ($searchID) {
-            $query->where('id', 'like', "%$searchID%");
-        }
-
-        $usuarios = $query->paginate($limit);
-
-        return view('dashboard', ['usuarios' => $usuarios]);
-    })->middleware(['auth', 'verified'])->name('dashboard.search');
-
     Route::post('/enviar-form', function (Request $dados) {
         Teste::create([
             'nome' => $dados->nome,
@@ -75,15 +42,14 @@ Route::middleware(['auth'])->group(function () {
         return view('editar', compact('usuario'));
     })->name('editar');
 
-    Route::put('/dashboard/atualizar/{id}', function (Request $request, $id) {
+    Route::get('/dashboard/atualizar/{id}', function (Request $request, $id) {
         $usuario = Teste::find($id);
         $usuario->update([
-            'nome' => $request->input('nome'),
-            'email' => $request->input('email')
+            'nome' => $request->query('nome'),
+            'email' => $request->query('email')
         ]);
         return redirect('/dashboard')->with('success', 'Usuário editado com sucesso');
     })->name('atualizar');
-    
 
     Route::delete('/dashboard/excluir/{id}', function ($id) {
         $usuario = Teste::find($id);
