@@ -81,7 +81,7 @@
                                                         value="">
                                                 </div>
                                                 <button type="submit"
-                                                    class="btn btn-primary editar-btn">Editar</button>
+                                                    class="btn btn-primary editar-btn">Salvar</button>
                                             </form>
                                         </div>
                                     </div>
