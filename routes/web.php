@@ -13,10 +13,6 @@ Route::middleware(['auth'])->group(function () {
         ->middleware(['auth', 'verified'])
         ->name('dashboard');
 
-    Route::get('/dashboard-search', [CrudController::class, 'searchByID'])
-        ->middleware(['auth', 'verified'])
-        ->name('dashboard.search');
-
     Route::post('/enviar-form', [CrudController::class, 'store']);
 
     Route::get('/dashboard/editar/{id}', [CrudController::class, 'edit'])
@@ -27,10 +23,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::delete('/dashboard/excluir/{id}', [CrudController::class, 'destroy'])
         ->name('excluir');
-
-    Route::get('/search', [CrudController::class, 'search'])
-        ->middleware(['auth', 'verified'])
-        ->name('search');
 
     Route::get('/dashboard/usuarios-json', [CrudController::class, 'getUsersJson']);
 });

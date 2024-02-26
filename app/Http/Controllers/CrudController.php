@@ -9,52 +9,9 @@ class CrudController extends Controller
 {
     public function index(Request $request)
     {
-        $searchTerm = $request->input('search');
-        $limit = $request->query('limit', 100);
 
-        $query = Teste::query();
 
-        if ($searchTerm) {
-            $query->where('id', 'like', "%$searchTerm%")
-                ->orWhere('nome', 'like', "%$searchTerm%")
-                ->orWhere('email', 'like', "%$searchTerm%");
-        }
-
-        $usuarios = $query->paginate($limit);
-
-        return view('dashboard', ['usuarios' => $usuarios]);
-    }
-
-    public function search(Request $request)
-    {
-        $searchTerm = $request->input('search');
-
-        $query = Teste::query();
-
-        if ($searchTerm) {
-            $query->where('id', 'like', "%$searchTerm%")
-                ->orWhere('nome', 'like', "%$searchTerm%")
-                ->orWhere('email', 'like', "%$searchTerm%");
-        }
-
-        $usuarios = $query->paginate();
-
-        return view('dashboard', ['usuarios' => $usuarios]);
-    }
-
-    public function searchByID(Request $request)
-    {
-        $searchID = $request->input('search_ID');
-
-        $usuario = Teste::where('id', $searchID)->first();
-
-        if (!$usuario) {
-            return redirect('/dashboard')->with('error', 'Usuário não encontrado');
-        }
-
-        $usuarios = Teste::where('id', $searchID)->paginate(1);
-
-        return view('dashboard', ['usuarios' => $usuarios]);
+        return view('dashboard');
     }
 
     public function store(Request $request)

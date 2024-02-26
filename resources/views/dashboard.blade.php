@@ -61,30 +61,28 @@
                                     <div class="col-md-6 container d-flex align-items-center justify-content-center">
                                         <div class="w-75">
                                             <h3>Editar usuário pelo ID</h3>
-                                            @foreach($usuarios as $usuario)
-                                            <form action="{{ route('dashboard.search') }}" method="GET" class="py-1">
-                                            @endforeach
+                                            <form action="" method="GET" class="py-1">
                                                 <div class="input-group">
                                                     <input type="number" name="search_ID" class="form-control" placeholder="Pesquisar por ID" oninput="validity.valid||(value='');" min="0">
                                                     <button type="submit" class="btn btn-primary">Buscar</button>
                                                 </div>
                                             </form>
-                                            <form id="form-atualizar" action="{{ route('atualizar', ['id' => $usuario->id]) }}" method="POST">
+                                            <form id="form-atualizar" action="" method="POST">
                                                 @csrf
                                                 @method('POST')
                                                 <div class="mb-3">
                                                     <label for="nome" class="form-label fs-5">Nome</label>
-                                                    <input name="nome" class="form-control" id="nome" value="{{ $usuario->nome }}">
+                                                    <input name="nome" class="form-control" id="nome" value="">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="email" class="form-label fs-5">Email</label>
-                                                    <input name="email" class="form-control" id="email" value="{{ $usuario->email }}">
+                                                    <input name="email" class="form-control" id="email" value="">
                                                 </div>
                                                 <button type="submit" class="btn btn-primary editar-btn">Editar</button>
                                             </form>
                                         </div>
-                                    </div> 
-                                </div>
+                                    </div>
+                                    
                             </div>
                         </div>
                     </div>
@@ -92,10 +90,9 @@
                 <hr>
                 <div class="px-5 mb-3">
                     <h3>Pesquisa</h3>
-                    <form action="{{ route('search') }}" method="GET" class="py-1">
+                    <form action="" method="GET" class="py-1" id="form-search">
                         <div class="input-group">
-                            <input type="text" name="search" class="form-control"
-                                placeholder="Pesquisar por ID, Nome ou Email">
+                            <input type="text" id="search" name="search" class="form-control" placeholder="Pesquisar por ID, Nome ou Email">
                             <button type="submit" class="btn btn-primary">Buscar</button>
                         </div>
                     </form>
@@ -105,119 +102,151 @@
     </div>
 </header>
 
+<section class="container p-1" id="tabela">
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col" class="bg-dark text-white fs-5">ID</th>
+                <th scope="col" class="bg-dark text-white fs-5">Nome</th>
+                <th scope="col" class="bg-dark text-white fs-5">Email</th>
+                <th scope="col" class="text-center bg-dark text-white fs-5">Excluir</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-usuarios">
+        </tbody>
+    </table>
+    <script>
+        function carregarUsuarios() {
+            fetch('/dashboard/usuarios-json')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('tabela-usuarios').innerHTML = '';
+
+                    data.usuarios.forEach(function(usuario) {
+                        var tr = document.createElement('tr');
+
+                        var tdId = document.createElement('td');
+                        tdId.textContent = usuario.id;
+                        tr.appendChild(tdId);
+
+                        var tdNome = document.createElement('td');
+                        tdNome.textContent = usuario.nome;
+                        tr.appendChild(tdNome);
+
+                        var tdEmail = document.createElement('td');
+                        tdEmail.textContent = usuario.email;
+                        tr.appendChild(tdEmail);
+
+                        var tdExcluir = document.createElement('td');
+                        tdExcluir.classList.add('text-center');
+                        var form = document.createElement('form');
+                        form.setAttribute('action', '/excluir/' + usuario.id);
+                        form.setAttribute('method', 'POST');
+
+                        var csrfToken = document.createElement('input');
+                        csrfToken.setAttribute('type', 'hidden');
+                        csrfToken.setAttribute('name', '_token');
+                        csrfToken.setAttribute('value', '{{ csrf_token() }}');
+                        form.appendChild(csrfToken);
+
+                        var methodField = document.createElement('input');
+                        methodField.setAttribute('type', 'hidden');
+                        methodField.setAttribute('name', '_method');
+                        methodField.setAttribute('value', 'DELETE');
+                        form.appendChild(methodField);
+
+                        var submitBtn = document.createElement('button');
+                        submitBtn.setAttribute('type', 'submit');
+                        submitBtn.textContent = 'Excluir';
+                        submitBtn.classList.add('btn', 'btn-sm', 'btn-danger', 'delete-btn');
+                        form.appendChild(submitBtn);
+
+                        tdExcluir.appendChild(form);
+                        tr.appendChild(tdExcluir);
+
+                        document.getElementById('tabela-usuarios').appendChild(tr);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar usuários:', error);
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarUsuarios();
+        });
+    </script>
+
+    <br />
+
+    <script>
+        function pesquisarUsuarios() {
+            var searchTerm = document.getElementById('search').value;
+
+            fetch('/dashboard/usuarios-json?search=' + searchTerm)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('tabela-usuarios').innerHTML = '';
+
+                    data.usuarios.forEach(function(usuario) {
+                        var tr = document.createElement('tr');
+
+                        var tdId = document.createElement('td');
+                        tdId.textContent = usuario.id;
+                        tr.appendChild(tdId);
+
+                        var tdNome = document.createElement('td');
+                        tdNome.textContent = usuario.nome;
+                        tr.appendChild(tdNome);
+
+                        var tdEmail = document.createElement('td');
+                        tdEmail.textContent = usuario.email;
+                        tr.appendChild(tdEmail);
+
+                        var tdExcluir = document.createElement('td');
+                        tdExcluir.classList.add('text-center');
+                        var form = document.createElement('form');
+                        form.setAttribute('action', '/excluir/' + usuario.id);
+                        form.setAttribute('method', 'POST');
+
+                        var csrfToken = document.createElement('input');
+                        csrfToken.setAttribute('type', 'hidden');
+                        csrfToken.setAttribute('name', '_token');
+                        csrfToken.setAttribute('value', '{{ csrf_token() }}');
+                        form.appendChild(csrfToken);
+
+                        var methodField = document.createElement('input');
+                        methodField.setAttribute('type', 'hidden');
+                        methodField.setAttribute('name', '_method');
+                        methodField.setAttribute('value', 'DELETE');
+                        form.appendChild(methodField);
+
+                        var submitBtn = document.createElement('button');
+                        submitBtn.setAttribute('type', 'submit');
+                        submitBtn.textContent = 'Excluir';
+                        submitBtn.classList.add('btn', 'btn-sm', 'btn-danger', 'delete-btn');
+                        form.appendChild(submitBtn);
+
+                        tdExcluir.appendChild(form);
+                        tr.appendChild(tdExcluir);
+
+                        document.getElementById('tabela-usuarios').appendChild(tr);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar usuários:', error);
+                });
+        }
+
+        document.getElementById('form-search').addEventListener('submit', function(event) {
+            event.preventDefault();
+            pesquisarUsuarios();
+        });
+    </script>
     
 
-    <section class="container p-1" id="tabela">
-
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col" class="bg-dark text-white fs-5">ID</th>
-                    <th scope="col" class="bg-dark text-white fs-5">Nome</th>
-                    <th scope="col" class="bg-dark text-white fs-5">Email</th>
-                    <th scope="col" class="text-center bg-dark text-white fs-5">Excluir</th>
-                </tr>
-            </thead>
-            <tbody id="tabela-usuarios">
-            </tbody>
-        </table>
-        <script>
-            function carregarUsuarios() {
-                fetch('/dashboard/usuarios-json')
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('tabela-usuarios').innerHTML = '';
-        
-                        data.usuarios.forEach(function(usuario) {
-                            var tr = document.createElement('tr');
-        
-                            var tdId = document.createElement('td');
-                            tdId.textContent = usuario.id;
-                            tr.appendChild(tdId);
-        
-                            var tdNome = document.createElement('td');
-                            tdNome.textContent = usuario.nome;
-                            tr.appendChild(tdNome);
-        
-                            var tdEmail = document.createElement('td');
-                            tdEmail.textContent = usuario.email;
-                            tr.appendChild(tdEmail);
-
-                            var tdExcluir = document.createElement('td');
-                            tdExcluir.classList.add('text-center');
-                            var form = document.createElement('form');
-                            form.setAttribute('action', '/excluir/' + usuario.id);
-                            form.setAttribute('method', 'POST');
-        
-                            var csrfToken = document.createElement('input');
-                            csrfToken.setAttribute('type', 'hidden');
-                            csrfToken.setAttribute('name', '_token');
-                            csrfToken.setAttribute('value', 'seu_csrf_token_aqui');
-                            form.appendChild(csrfToken);
-        
-                            var methodField = document.createElement('input');
-                            methodField.setAttribute('type', 'hidden');
-                            methodField.setAttribute('name', '_method');
-                            methodField.setAttribute('value', 'DELETE');
-                            form.appendChild(methodField);
-        
-                            var submitBtn = document.createElement('button');
-                            submitBtn.setAttribute('type', 'submit');
-                            submitBtn.textContent = 'Excluir';
-                            submitBtn.classList.add('btn', 'btn-sm', 'btn-danger', 'delete-btn');
-                            form.appendChild(submitBtn);
-        
-                            tdExcluir.appendChild(form);
-                            tr.appendChild(tdExcluir);
-        
-                            document.getElementById('tabela-usuarios').appendChild(tr);
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Erro ao carregar usuários:', error);
-                    });
-            }
-
-            document.addEventListener('DOMContentLoaded', function() {
-                carregarUsuarios();
-            });
-        </script>
-
-        <div class="text-center">
-            @if ($usuarios->onFirstPage())
-            <span class="btn btn-secondary disabled">Primeira Página</span>
-            @else
-            <a href="{{ $usuarios->url(1) }}#tabela" class="btn btn-primary">Primeira Página</a>
-            @endif
-
-            @if ($usuarios->previousPageUrl())
-            <a href="{{ $usuarios->previousPageUrl() }}#tabela" class="btn btn-primary">{{ $usuarios->currentPage() - 1
-                }}</a>
-            @else
-            <span class="btn btn-secondary disabled">Página Anterior</span>
-            @endif
-
-            @if ($usuarios->nextPageUrl())
-            <a href="{{ $usuarios->nextPageUrl() }}#tabela" class="btn btn-primary">{{ $usuarios->currentPage() + 1
-                }}</a>
-            @else
-            <span class="btn btn-secondary disabled">Próxima Página</span>
-            @endif
-
-            @if ($usuarios->hasMorePages())
-            <a href="{{ $usuarios->url($usuarios->lastPage()) }}#tabela" class="btn btn-primary">Última Página</a>
-            @else
-            <span class="btn btn-secondary disabled">Última Página</span>
-            @endif
-        </div>
-
-
-
-        <br />
-
-  
-
-    </section>
+</section>
 
 
 
