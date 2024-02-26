@@ -118,24 +118,70 @@
                     <th scope="col" class="text-center bg-dark text-white fs-5">Excluir</th>
                 </tr>
             </thead>
-
-            <tbody>
-                @foreach($usuarios as $usuario)
-                <tr>
-                    <td>{{ $usuario->id }}</td>
-                    <td data-field="nome" data-id="{{ $usuario->id }}">{{ $usuario->nome }}</td>
-                    <td data-field="email" data-id="{{ $usuario->id }}">{{ $usuario->email }}</td>
-                    <td class="text-center">
-                        <form id="form-excluir-{{ $usuario->id }}" action="{{ route('excluir', ['id' => $usuario->id]) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger delete-btn">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
+            <tbody id="tabela-usuarios">
             </tbody>
         </table>
+        <script>
+            function carregarUsuarios() {
+                fetch('/dashboard/usuarios-json')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('tabela-usuarios').innerHTML = '';
+        
+                        data.usuarios.forEach(function(usuario) {
+                            var tr = document.createElement('tr');
+        
+                            var tdId = document.createElement('td');
+                            tdId.textContent = usuario.id;
+                            tr.appendChild(tdId);
+        
+                            var tdNome = document.createElement('td');
+                            tdNome.textContent = usuario.nome;
+                            tr.appendChild(tdNome);
+        
+                            var tdEmail = document.createElement('td');
+                            tdEmail.textContent = usuario.email;
+                            tr.appendChild(tdEmail);
+
+                            var tdExcluir = document.createElement('td');
+                            tdExcluir.classList.add('text-center');
+                            var form = document.createElement('form');
+                            form.setAttribute('action', '/excluir/' + usuario.id);
+                            form.setAttribute('method', 'POST');
+        
+                            var csrfToken = document.createElement('input');
+                            csrfToken.setAttribute('type', 'hidden');
+                            csrfToken.setAttribute('name', '_token');
+                            csrfToken.setAttribute('value', 'seu_csrf_token_aqui');
+                            form.appendChild(csrfToken);
+        
+                            var methodField = document.createElement('input');
+                            methodField.setAttribute('type', 'hidden');
+                            methodField.setAttribute('name', '_method');
+                            methodField.setAttribute('value', 'DELETE');
+                            form.appendChild(methodField);
+        
+                            var submitBtn = document.createElement('button');
+                            submitBtn.setAttribute('type', 'submit');
+                            submitBtn.textContent = 'Excluir';
+                            submitBtn.classList.add('btn', 'btn-sm', 'btn-danger', 'delete-btn');
+                            form.appendChild(submitBtn);
+        
+                            tdExcluir.appendChild(form);
+                            tr.appendChild(tdExcluir);
+        
+                            document.getElementById('tabela-usuarios').appendChild(tr);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Erro ao carregar usuários:', error);
+                    });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                carregarUsuarios();
+            });
+        </script>
 
         <div class="text-center">
             @if ($usuarios->onFirstPage())

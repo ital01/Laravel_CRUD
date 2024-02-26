@@ -1,123 +1,39 @@
 <?php
 
-use Illuminate\Http\Request;
-use App\Models\Teste;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Response;
+use App\Http\Controllers\CrudController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return redirect('/dashboard');
 });
 
-// Rotas do dashboard
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function (Request $request) {
-        $searchTerm = $request->input('search');
-        $limit = $request->query('limit', 100);
+    Route::get('/dashboard', [CrudController::class, 'index'])
+        ->middleware(['auth', 'verified'])
+        ->name('dashboard');
 
-        $query = Teste::query();
+    Route::get('/dashboard-search', [CrudController::class, 'searchByID'])
+        ->middleware(['auth', 'verified'])
+        ->name('dashboard.search');
 
-        if ($searchTerm) {
-            $query->where('id', 'like', "%$searchTerm%")
-                ->orWhere('nome', 'like', "%$searchTerm%")
-                ->orWhere('email', 'like', "%$searchTerm%");
-        }
+    Route::post('/enviar-form', [CrudController::class, 'store']);
 
-        $usuarios = $query->paginate($limit);
+    Route::get('/dashboard/editar/{id}', [CrudController::class, 'edit'])
+        ->name('editar');
 
-        return view('dashboard', ['usuarios' => $usuarios]);
-    })->middleware(['auth', 'verified'])->name('dashboard');
+    Route::post('/dashboard/atualizar/{id}', [CrudController::class, 'update'])
+        ->name('atualizar');
 
-    Route::get('/dashboard-search', function (Request $request) {
-        $searchID = $request->input('search_ID');
-    
-        $usuario = Teste::where('id', $searchID)->first();
-    
-        if (!$usuario) {
-            return redirect('/dashboard')->with('error', 'Usuário não encontrado');
-        }
+    Route::delete('/dashboard/excluir/{id}', [CrudController::class, 'destroy'])
+        ->name('excluir');
 
-        $usuarios = Teste::where('id', $searchID)->paginate(1);
-    
-        return view('dashboard', ['usuarios' => $usuarios]);
-    })->middleware(['auth', 'verified'])->name('dashboard.search');
+    Route::get('/search', [CrudController::class, 'search'])
+        ->middleware(['auth', 'verified'])
+        ->name('search');
 
-    Route::post('/enviar-form', function (Request $dados) {
-        Teste::create([
-            'nome' => $dados->nome,
-            'email' => $dados->email
-        ]);
-        return redirect('/dashboard')->with('success', 'Usuário registrado com sucesso');
-    });
-
-    Route::get('/dashboard/editar/{id}', function ($id) {
-        $usuario = Teste::find($id);
-        return view('editar', compact('usuario'));
-    })->name('editar');
-
-    Route::post('/dashboard/atualizar/{id}', function (Request $request, $id) {
-        $usuario = Teste::find($id);
-        $usuario->update([
-            'nome' => $request->input('nome'),
-            'email' => $request->input('email')
-        ]);
-        return redirect('/dashboard')->with('success', 'Usuário editado com sucesso');
-    })->name('atualizar');
-
-    Route::delete('/dashboard/excluir/{id}', function ($id) {
-        $usuario = Teste::find($id);
-        if ($usuario) {
-            $usuario->delete();
-            return redirect('/dashboard')->with('success', 'Usuário excluído com sucesso');
-        }
-        return redirect('/dashboard')->with('error', 'Usuário não encontrado');
-    })->name('excluir');
-
-    Route::get('/search', function (Request $request) {
-        $searchTerm = $request->input('search');
-    
-        $query = Teste::query();
-    
-        if ($searchTerm) {
-            $query->where('id', 'like', "%$searchTerm%")
-                ->orWhere('nome', 'like', "%$searchTerm%")
-                ->orWhere('email', 'like', "%$searchTerm%");
-        }
-    
-        $usuarios = $query->paginate();
-    
-        return view('dashboard', ['usuarios' => $usuarios]);
-    })->middleware(['auth', 'verified'])->name('search');
-    
+    Route::get('/dashboard/usuarios-json', [CrudController::class, 'getUsersJson']);
 });
-
-Route::get('/dashboard/usuarios-json', function () {
-    $usuarios = Teste::all(['id', 'nome', 'email']);
-
-    return Response::json([
-        'usuarios' => $usuarios
-    ]);
-});
-
-Route::get('/dashboard/usuarios-json', function (Request $request) {
-    $searchTerm = $request->input('search');
-    
-    $query = Teste::query();
-    
-    if ($searchTerm) {
-        $query->where('id', 'like', "%$searchTerm%")
-            ->orWhere('nome', 'like', "%$searchTerm%")
-            ->orWhere('email', 'like', "%$searchTerm%");
-    }
-    
-    $usuarios = $query->get(['id', 'nome', 'email']);
-    
-    return Response::json([
-        'usuarios' => $usuarios
-    ]);
-});
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
