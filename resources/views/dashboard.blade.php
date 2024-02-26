@@ -142,6 +142,7 @@
     
     function buscarUsuarioPorID() {
     var searchID = document.getElementById('search-ID').value;
+    
     document.getElementById('form-atualizar').action = "/dashboard/atualizar/" + searchID;
 
     fetch('/dashboard/usuarios-json?search=' + searchID)
