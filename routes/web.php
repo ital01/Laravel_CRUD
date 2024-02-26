@@ -15,9 +15,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/enviar-form', [CrudController::class, 'store']);
 
-    Route::get('/dashboard/editar/{id}', [CrudController::class, 'edit'])
-        ->name('editar');
-
     Route::post('/dashboard/atualizar/{id}', [CrudController::class, 'update'])
         ->name('atualizar');
 

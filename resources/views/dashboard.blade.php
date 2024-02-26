@@ -54,20 +54,20 @@
                                         <h3>Editar usuário pelo ID</h3>
                                         <form class="py-1" id="form-search-id">
                                             <div class="input-group">
-                                                <input type="number" id="search-ID" name="searchiID" class="form-control" placeholder="Pesquisar por ID">
+                                                <input type="number" id="search-ID" name="searchID" class="form-control" placeholder="Pesquisar por ID" min="1">
                                                 <button type="submit" class="btn btn-primary">Buscar</button>
                                             </div>
                                         </form>
-                                        <form id="form-atualizar" action="" method="POST">
+                                        <form id="form-atualizar" action="/dashboard/atualizar/{id}" method="POST">
                                             @csrf
                                             @method('POST')
                                             <div class="mb-3">
                                                 <label for="nome" class="form-label fs-5">Nome</label>
-                                                <input name="nome" class="form-control" id="nome" value="">
+                                                <input name="nome" class="form-control" id="nome-editar" value="">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="email" class="form-label fs-5">Email</label>
-                                                <input name="email" class="form-control" id="email" value="">
+                                                <input name="email" class="form-control" id="email-editar" value="">
                                             </div>
                                             <button type="submit" class="btn btn-primary editar-btn">Editar</button>
                                         </form>
@@ -139,14 +139,19 @@
                 console.error('Erro ao pesquisar usuários:', error);
             });
     }
+    
     function buscarUsuarioPorID() {
     var searchID = document.getElementById('search-ID').value;
+    document.getElementById('form-atualizar').action = "/dashboard/atualizar/" + searchID;
+
     fetch('/dashboard/usuarios-json?search=' + searchID)
         .then(response => response.json())
         .then(data => {
             if (data.usuarios.length > 0) {
-                document.getElementById('tabela-usuarios').innerHTML = '';
-                criarLinhaUsuario(data.usuarios[0], true); // Passando true para atualizar o formulário de edição
+                var usuario = data.usuarios[0];
+
+                document.getElementById('nome-editar').value = usuario.nome;
+                document.getElementById('email-editar').value = usuario.email;
             } else {
                 alert('Nenhum usuário encontrado com o ID fornecido.');
             }
@@ -155,7 +160,6 @@
             console.error('Erro ao buscar usuário por ID:', error);
         });
 }
-
 
     function criarLinhaUsuario(usuario) {
         var tr = document.createElement('tr');
@@ -174,7 +178,7 @@
         var tdExcluir = document.createElement('td');
         tdExcluir.classList.add('text-center');
         var form = document.createElement('form');
-        form.setAttribute('action', '/excluir/' + usuario.id);
+        form.setAttribute('action', '/dashboard/excluir/' + usuario.id);
         form.setAttribute('method', 'POST');
 
         var csrfToken = document.createElement('input');
