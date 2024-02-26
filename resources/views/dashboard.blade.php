@@ -141,7 +141,7 @@
                         var tdExcluir = document.createElement('td');
                         tdExcluir.classList.add('text-center');
                         var form = document.createElement('form');
-                        form.setAttribute('action', '/excluir/' + usuario.id);
+                        form.setAttribute('action', '/dashboard/excluir/' + usuario.id);
                         form.setAttribute('method', 'POST');
 
                         var csrfToken = document.createElement('input');
