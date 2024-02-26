@@ -55,9 +55,13 @@ class CrudController extends Controller
         $query = Teste::query();
 
         if ($searchTerm) {
+                if (is_numeric($searchTerm)) {
+                    $query->where('id', $searchTerm);
+                } 
+            else{
             $query->where('id', 'like', "%$searchTerm%")
                 ->orWhere('nome', 'like', "%$searchTerm%")
-                ->orWhere('email', 'like', "%$searchTerm%");
+                ->orWhere('email', 'like', "%$searchTerm%");}
         }
 
         $usuarios = $query->get(['id', 'nome', 'email']);
@@ -65,6 +69,7 @@ class CrudController extends Controller
         return response()->json(['usuarios' => $usuarios]);
     }
 
+    
     public function editByID(Request $request)
     {
         $searchID = $request->input('search_ID');
