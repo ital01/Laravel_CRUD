@@ -9,19 +9,7 @@ class CrudController extends Controller
 {
     public function index(Request $request)
     {
-        $searchTerm = $request->input('search');
-
-        $query = Teste::query();
-
-        if ($searchTerm) {
-            $query->where('id', 'like', "%$searchTerm%")
-                ->orWhere('nome', 'like', "%$searchTerm%")
-                ->orWhere('email', 'like', "%$searchTerm%");
-        }
-
-        $usuarios = $query->paginate();
-
-        return view('dashboard', ['usuarios' => $usuarios]);
+        return view('/dashboard');
     }
 
     public function store(Request $request)
