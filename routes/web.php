@@ -15,7 +15,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard/editar/{id}', [CrudController::class, 'edit'])->name('editar');
     Route::get('/dashboard/atualizar/{id}', [CrudController::class, 'update'])->name('atualizar');
     Route::delete('/dashboard/excluir/{id}', [CrudController::class, 'destroy'])->name('excluir');
-    Route::get('/search', [CrudController::class, 'index'])->middleware(['verified'])->name('search');
 });
 
 Route::middleware('auth')->group(function () {

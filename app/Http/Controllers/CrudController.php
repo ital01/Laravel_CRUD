@@ -10,8 +10,10 @@ class CrudController extends Controller
     public function index(Request $request)
     {
         $query = Teste::query();
+
+        $limit = Teste::count();
     
-        $usuarios = $query->paginate();
+        $usuarios = $query->paginate($limit);
     
         return view('dashboard', ['usuarios' => $usuarios]);
     }

@@ -41,15 +41,17 @@
                                         </div>
                                         <button type="submit" class="btn btn-primary">ENVIAR</button>
                                     </form>
-                                    <hr>
+                                    <!--
+                                        <hr>
                                     <h3>Pesquisa</h3>
-                                    <form action="{{ route('search') }}" method="GET" class="mb-4 py-1">
+                                    <form action="" method="GET" class="mb-4 py-1">
                                         <div class="input-group">
                                             <input type="text" name="search" class="form-control"
                                                 placeholder="Pesquisa por ID, Nome, ou Email">
                                             <button type="submit" class="btn btn-primary">PROCURAR</button>
                                         </div>
                                     </form>
+                                    -->
                                 </div>
                             </div>
                         </div>
