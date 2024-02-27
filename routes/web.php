@@ -2,9 +2,8 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\CrudController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CrudController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect('/dashboard');
@@ -16,19 +15,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard/editar/{id}', [CrudController::class, 'edit'])->name('editar');
     Route::get('/dashboard/atualizar/{id}', [CrudController::class, 'update'])->name('atualizar');
     Route::delete('/dashboard/excluir/{id}', [CrudController::class, 'destroy'])->name('excluir');
-    Route::get('/dashboard', [CrudController::class, 'index'])
-        ->middleware(['auth', 'verified'])
-        ->name('dashboard');
-
-    Route::post('/enviar-form', [CrudController::class, 'store']);
-
-    Route::post('/dashboard/atualizar/{id}', [CrudController::class, 'update'])
-        ->name('atualizar');
-
-    Route::delete('/dashboard/excluir/{id}', [CrudController::class, 'destroy'])
-        ->name('excluir');
-
-    Route::get('/dashboard/usuarios-json', [CrudController::class, 'getUsersJson']);
+    Route::get('/search', [CrudController::class, 'index'])->middleware(['verified'])->name('search');
 });
 
 Route::middleware('auth')->group(function () {

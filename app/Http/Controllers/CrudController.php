@@ -15,7 +15,6 @@ class CrudController extends Controller
     
         return view('dashboard', ['usuarios' => $usuarios]);
     }
-    
 
     public function store(Request $request)
     {
