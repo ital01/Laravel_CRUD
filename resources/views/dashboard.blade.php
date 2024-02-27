@@ -18,16 +18,8 @@
             <div class="col-md-6">
                 @if (session('success'))
                 <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                    class="alert alert-success alert-dismissible fade show my-2 w-50" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-
-            @if (session('error'))
-                <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                    class="alert alert-danger alert-dismissible fade show my-2 w-50" role="alert">
-                    {{ session('error') }}
+                    class="alert alert-success alert-dismissible fade show my-2" role="alert">
+                    {{ __('Informações do perfil atualizadas com sucesso') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 @endif
@@ -51,27 +43,16 @@
                                     </form>
                                     <hr>
                                     <h3>Pesquisa</h3>
-                                    <form action="" method="GET" class="mb-4 py-1">
+                                    <form action="{{ route('search') }}" method="GET" class="mb-4 py-1">
                                         <div class="input-group">
                                             <input type="text" name="search" class="form-control"
                                                 placeholder="Pesquisa por ID, Nome, ou Email">
                                             <button type="submit" class="btn btn-primary">PROCURAR</button>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="px-5 mb-3">
-                        <h3>Pesquisa</h3>
-                        <form class="py-1" id="form-search">
-                            <div class="input-group">
-                                <input type="text" id="search" name="search" class="form-control"
-                                    placeholder="Pesquisar por ID, Nome ou Email">
-                                <button type="submit" class="btn btn-primary">Buscar</button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -85,6 +66,7 @@
                     <th scope="col" class="bg-dark text-white fs-5">ID</th>
                     <th scope="col" class="bg-dark text-white fs-5">Nome</th>
                     <th scope="col" class="bg-dark text-white fs-5">Email</th>
+                    <th scope="col" class="text-center bg-dark text-white fs-5">Editar</th>
                     <th scope="col" class="text-center bg-dark text-white fs-5">Excluir</th>
                 </tr>
             </thead>
@@ -172,4 +154,3 @@
 </body>
 
 </html>
-
