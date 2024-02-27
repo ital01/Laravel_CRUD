@@ -13,5 +13,8 @@
         "laravel-vite-plugin": "^1.0.0",
         "postcss": "^8.4.31",
         "vite": "^5.0.0"
+    },
+    "dependencies": {
+        "gridjs": "^6.1.1"
     }
 }
