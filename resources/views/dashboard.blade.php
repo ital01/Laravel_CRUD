@@ -171,7 +171,13 @@
 
     <script>
         $(document).ready(function() {
-            $('#tabela-usuarios').DataTable();
+            $('#tabela-usuarios').DataTable({
+                "pagingType": "full_numbers",
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/2.0.0/i18n/pt-BR.json"
+                },
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]] 
+            });
         });
     </script>
 </body>
