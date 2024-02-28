@@ -23,7 +23,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-
+    
                 @if (session('error'))
                     <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
                         class="alert alert-danger alert-dismissible fade show my-2 text-center" role="alert">
@@ -31,46 +31,64 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-
-                <div class="card o-hidden border-0 shadow-lg my-2">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="py-4 px-5">
-                                    <h3>Adicionar cadastro</h3>
-                                    <form id="form" action="/enviar-form" method="POST" class="mb-4">
-                                        @csrf
-                                        <div class="mb-3">
-                                            <label for="nome" class="form-label fs-5">Nome</label>
-                                            <input type="text" id="nome" name="nome" class="form-control"
-                                                required minlength="2">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="email" class="form-label fs-5">Email</label>
-                                            <input type="email" id="email" name="email" class="form-control"
-                                                required>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Enviar</button>
-                                    </form>
-                                    <!--
-                                        <hr>
-                                    <h3>Pesquisa</h3>
-                                    <form action="" method="GET" class="mb-4 py-1">
-                                        <div class="input-group">
-                                            <input type="text" name="search" class="form-control"
-                                                placeholder="Pesquisa por ID, Nome, ou Email">
-                                            <button type="submit" class="btn btn-primary">PROCURAR</button>
-                                        </div>
-                                    </form>
-                                    -->
+    
+                <div class="d-flex justify-content-center"> <!-- Adicionando a classe d-flex justify-content-center aqui -->
+                    <!-- Formulário de envio -->
+                    <div class="card o-hidden border-0 shadow-lg my-2 w-75">
+                        <div class="card-body">
+                            <h3 class="mb-3">Adicionar cadastro</h3>
+                            <form id="form" action="/enviar-form" method="POST">
+                                @csrf
+                                <div class="py-2">
+                                    <label for="nome" class="form-label">Nome</label>
+                                    <input type="text" id="nome" name="nome" class="form-control" required
+                                        minlength="2">
                                 </div>
-                            </div>
+                                <div class="py-2">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" id="email" name="email" class="form-control" required>
+                                </div>
+                                <div class="py-4">
+                                    <button type="submit" class="btn btn-primary">Enviar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex justify-content-center"> <!-- Adicionando a classe d-flex justify-content-center aqui -->
+                    <!-- Formulário de pesquisa -->
+                    <div class="card o-hidden border-0 shadow-lg my-2 w-75">
+                        <div class="card-body">
+                            <h3>Pesquisa</h3>
+                            <form action="" method="GET" class="py-1">
+                                <div class="form-group mb-2">
+                                    <label for="searchById">ID</label>
+                                    <input type="number" id="searchById" name="searchById" class="form-control"
+                                        placeholder="Pesquisa por ID" min="1">
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="searchByName">Nome</label>
+                                    <input type="text" id="searchByName" name="searchByName" class="form-control"
+                                        placeholder="Pesquisa por Nome">
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="searchByEmail">Email</label>
+                                    <input type="text" id="searchByEmail" name="searchByEmail" class="form-control"
+                                        placeholder="Pesquisa por Email">
+                                </div>
+                                <div class="py-1">
+                                    <button type="submit" class="btn btn-primary">PROCURAR</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </header>
+    
 
     <section class="container p-1" id="tabela">
         <table id="tabela-usuarios" class="table table-bordered table-striped">
@@ -87,10 +105,13 @@
                 @foreach ($usuarios as $usuario)
                     <tr>
                         <td>{{ $usuario->id }}</td>
-                        <td class="editable" data-field="nome" data-id="{{ $usuario->id }}">{{ $usuario->nome }}</td>
-                        <td class="editable" data-field="email" data-id="{{ $usuario->id }}">{{ $usuario->email }}</td>
+                        <td class="editable" data-field="nome" data-id="{{ $usuario->id }}">{{ $usuario->nome }}
+                        </td>
+                        <td class="editable" data-field="email" data-id="{{ $usuario->id }}">{{ $usuario->email }}
+                        </td>
                         <td class="text-center">
-                            <button class="btn btn-sm btn-info editar-btn" data-id="{{ $usuario->id }}">Editar</button>
+                            <button class="btn btn-sm btn-info editar-btn"
+                                data-id="{{ $usuario->id }}">Editar</button>
                         </td>
                         <td class="text-center">
                             <form id="form-excluir-{{ $usuario->id }}"
@@ -176,7 +197,10 @@
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/2.0.0/i18n/pt-BR.json"
                 },
-                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]] 
+                "lengthMenu": [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "Todos"]
+                ]
             });
         });
     </script>
