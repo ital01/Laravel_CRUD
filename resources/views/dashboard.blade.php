@@ -197,6 +197,13 @@
         }
 
         filtrarTabela();
+        var remover_pesquisa_DataTable = document.querySelector('.dt-search');
+
+        if (remover_pesquisa_DataTable) {
+            remover_pesquisa_DataTable.parentNode.removeChild(remover_pesquisa_DataTable);
+        } else {
+            console.log("O elemento não foi encontrado.");
+        }
 
         $('#searchForm').submit(function(event) {
             event.preventDefault();
