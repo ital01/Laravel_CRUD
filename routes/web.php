@@ -11,10 +11,12 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [CrudController::class, 'index'])->middleware(['verified'])->name('dashboard');
+    Route::get('/search', [CrudController::class, 'index'])->name('search');
     Route::post('/enviar-form', [CrudController::class, 'store'])->middleware(['verified']);
     Route::get('/dashboard/editar/{id}', [CrudController::class, 'edit'])->name('editar');
     Route::get('/dashboard/atualizar/{id}', [CrudController::class, 'update'])->name('atualizar');
     Route::delete('/dashboard/excluir/{id}', [CrudController::class, 'destroy'])->name('excluir');
+    
 });
 
 Route::middleware('auth')->group(function () {

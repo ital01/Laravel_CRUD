@@ -32,11 +32,11 @@
                     </div>
                 @endif
     
-                <div class="d-flex justify-content-center"> <!-- Adicionando a classe d-flex justify-content-center aqui -->
+                <div class="d-flex justify-content-center">
                     <!-- Formulário de envio -->
                     <div class="card o-hidden border-0 shadow-lg my-2 w-75">
                         <div class="card-body">
-                            <h3 class="mb-3">Adicionar cadastro</h3>
+                            <h3 class="mb-4">Adicionar cadastro</h3>
                             <form id="form" action="/enviar-form" method="POST">
                                 @csrf
                                 <div class="py-2">
@@ -57,30 +57,25 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="d-flex justify-content-center"> <!-- Adicionando a classe d-flex justify-content-center aqui -->
+                <div class="d-flex justify-content-center">
                     <!-- Formulário de pesquisa -->
                     <div class="card o-hidden border-0 shadow-lg my-2 w-75">
                         <div class="card-body">
                             <h3>Pesquisa</h3>
-                            <form action="" method="GET" class="py-1">
-                                <div class="form-group mb-2">
+                            <form id="searchForm" class="py-1">
+                                <div class="form-group mb-3">
                                     <label for="searchById">ID</label>
-                                    <input type="number" id="searchById" name="searchById" class="form-control"
-                                        placeholder="Pesquisa por ID" min="1">
+                                    <input type="number" id="searchById" name="searchById" class="form-control" placeholder="Pesquisa por ID" min="1">
                                 </div>
-                                <div class="form-group mb-2">
+                                <div class="form-group mb-3">
                                     <label for="searchByName">Nome</label>
-                                    <input type="text" id="searchByName" name="searchByName" class="form-control"
-                                        placeholder="Pesquisa por Nome">
+                                    <input type="text" id="searchByName" name="searchByName" class="form-control" placeholder="Pesquisa por Nome">
                                 </div>
-                                <div class="form-group mb-2">
+                                <div class="form-group mb-3">
                                     <label for="searchByEmail">Email</label>
-                                    <input type="text" id="searchByEmail" name="searchByEmail" class="form-control"
-                                        placeholder="Pesquisa por Email">
+                                    <input type="text" id="searchByEmail" name="searchByEmail" class="form-control" placeholder="Pesquisa por Email">
                                 </div>
-                                <div class="py-1">
-                                    <button type="submit" class="btn btn-primary">PROCURAR</button>
-                                </div>
+                                <button type="submit" id="searchButton" class="btn btn-primary">PROCURAR</button>
                             </form>
                         </div>
                     </div>
@@ -204,6 +199,28 @@
             });
         });
     </script>
+
+<script>
+    $(document).ready(function() {
+        $('#searchForm').submit(function(event) {
+            event.preventDefault();
+
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: '{{ route("search") }}',
+                method: 'GET',
+                data: formData,
+                success: function(response) {
+                    $('#tabela-usuarios').html(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
 </body>
 
 </html>

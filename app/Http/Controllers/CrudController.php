@@ -12,11 +12,42 @@ class CrudController extends Controller
         $query = Teste::query();
 
         $limit = Teste::count();
+
+        if ($request->has('searchById')) {
+            $query->where('id', $request->searchById);
+        }
+        if ($request->has('searchByName')) {
+            $query->where('nome', 'like', '%'.$request->searchByName.'%');
+        }
+        if ($request->has('searchByEmail')) {
+            $query->where('email', 'like', '%'.$request->searchByEmail.'%');
+        }
     
         $usuarios = $query->paginate($limit);
     
         return view('dashboard', ['usuarios' => $usuarios]);
     }
+
+    /*public function search(Request $request)
+    {
+        $query = Teste::query();
+    
+        if ($request->has('searchById')) {
+            $query->where('id', $request->searchById);
+        }
+        if ($request->has('searchByName')) {
+            $query->where('nome', 'like', '%'.$request->searchByName.'%');
+        }
+        if ($request->has('searchByEmail')) {
+            $query->where('email', 'like', '%'.$request->searchByEmail.'%');
+        }
+    
+        $usuarios = $query->paginate();
+    
+        return view('dashboard', compact('usuarios'));
+    }
+    */
+       
 
     public function store(Request $request)
     {
