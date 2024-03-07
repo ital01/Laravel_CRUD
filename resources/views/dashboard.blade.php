@@ -48,7 +48,7 @@
                                     <label for="email" class="form-label">Email</label>
                                     <input type="email" id="email" name="email" class="form-control" required>
                                 </div>
-                                <div class="py-4">
+                                <div class="py-2">
                                     <button type="submit" class="btn btn-primary">Enviar</button>
                                 </div>
                             </form>
@@ -75,7 +75,7 @@
                                     <label for="searchByEmail">Email</label>
                                     <input type="text" id="searchByEmail" name="searchByEmail" class="form-control" placeholder="Pesquisa por Email">
                                 </div>
-                                <button type="submit" id="searchButton" class="btn btn-primary">PROCURAR</button>
+                                <!--<button type="submit" id="searchButton" class="btn btn-primary">PROCURAR</button>-->
                             </form>
                         </div>
                     </div>
@@ -185,42 +185,29 @@
         });
     </script>
 
-    <script>
-        $(document).ready(function() {
-            $('#tabela-usuarios').DataTable({
-                "pagingType": "full_numbers",
-                "language": {
-                    "url": "https://cdn.datatables.net/plug-ins/2.0.0/i18n/pt-BR.json"
-                },
-                "lengthMenu": [
-                    [10, 25, 50, 100, -1],
-                    [10, 25, 50, 100, "Todos"]
-                ]
-            });
-        });
-    </script>
-
 <script>
     $(document).ready(function() {
+
+        document.addEventListener('DOMContentLoaded', filtrarTabela());
+        
+        function filtrarTabela() {
+            var id = $('#searchById').val();
+            var nome = $('#searchByName').val().toLowerCase();
+            var email = $('#searchByEmail').val().toLowerCase();
+
+            $('#tabela-usuarios').DataTable().columns(0).search(id).columns(1).search(nome).columns(2).search(email).draw();
+        }
+
         $('#searchForm').submit(function(event) {
             event.preventDefault();
-
-            var formData = $(this).serialize();
-
-            $.ajax({
-                url: '{{ route("search") }}',
-                method: 'GET',
-                data: formData,
-                success: function(response) {
-                    $('#tabela-usuarios').html(response);
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
+            filtrarTabela();
         });
+
+        $('#searchById, #searchByName, #searchByEmail').on('input', filtrarTabela);
     });
 </script>
+
+
 </body>
 
 </html>
