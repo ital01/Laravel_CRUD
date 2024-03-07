@@ -187,8 +187,6 @@
 
 <script>
     $(document).ready(function() {
-
-        document.addEventListener('DOMContentLoaded', filtrarTabela());
         
         function filtrarTabela() {
             var id = $('#searchById').val();
@@ -197,6 +195,8 @@
 
             $('#tabela-usuarios').DataTable().columns(0).search(id).columns(1).search(nome).columns(2).search(email).draw();
         }
+
+        filtrarTabela();
 
         $('#searchForm').submit(function(event) {
             event.preventDefault();
