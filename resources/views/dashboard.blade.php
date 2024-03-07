@@ -23,7 +23,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-    
+
                 @if (session('error'))
                     <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
                         class="alert alert-danger alert-dismissible fade show my-2 text-center" role="alert">
@@ -31,7 +31,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-    
+
                 <div class="d-flex justify-content-center">
                     <!-- Formulário de envio -->
                     <div class="card o-hidden border-0 shadow-lg my-2 w-75">
@@ -65,15 +65,18 @@
                             <form id="searchForm" class="py-1">
                                 <div class="form-group mb-3">
                                     <label for="searchById">ID</label>
-                                    <input type="number" id="searchById" name="searchById" class="form-control" placeholder="Pesquisa por ID" min="1">
+                                    <input type="number" id="searchById" name="searchById" class="form-control"
+                                        placeholder="Pesquisa por ID" min="1">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="searchByName">Nome</label>
-                                    <input type="text" id="searchByName" name="searchByName" class="form-control" placeholder="Pesquisa por Nome">
+                                    <input type="text" id="searchByName" name="searchByName" class="form-control"
+                                        placeholder="Pesquisa por Nome">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="searchByEmail">Email</label>
-                                    <input type="text" id="searchByEmail" name="searchByEmail" class="form-control" placeholder="Pesquisa por Email">
+                                    <input type="text" id="searchByEmail" name="searchByEmail" class="form-control"
+                                        placeholder="Pesquisa por Email">
                                 </div>
                                 <!--<button type="submit" id="searchButton" class="btn btn-primary">PROCURAR</button>-->
                             </form>
@@ -83,7 +86,7 @@
             </div>
         </div>
     </header>
-    
+
 
     <section class="container p-1" id="tabela">
         <table id="tabela-usuarios" class="table table-bordered table-striped">
@@ -185,34 +188,44 @@
         });
     </script>
 
-<script>
-    $(document).ready(function() {
-        
-        function filtrarTabela() {
-            var id = $('#searchById').val();
-            var nome = $('#searchByName').val().toLowerCase();
-            var email = $('#searchByEmail').val().toLowerCase();
-
-            $('#tabela-usuarios').DataTable().columns(0).search(id).columns(1).search(nome).columns(2).search(email).draw();
-        }
-
-        filtrarTabela();
-        var remover_pesquisa_DataTable = document.querySelector('.dt-search');
-
-        if (remover_pesquisa_DataTable) {
-            remover_pesquisa_DataTable.parentNode.removeChild(remover_pesquisa_DataTable);
-        } else {
-            console.log("O elemento não foi encontrado.");
-        }
-
-        $('#searchForm').submit(function(event) {
-            event.preventDefault();
-            filtrarTabela();
+    <script>
+        $('#tabela-usuarios').DataTable({
+            "pagingType": "full_numbers",
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/2.0.0/i18n/pt-BR.json"
+            },
+            "lengthMenu": [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "Todos"]
+            ]
         });
 
-        $('#searchById, #searchByName, #searchByEmail').on('input', filtrarTabela);
-    });
-</script>
+        $(document).ready(function() {
+
+            function filtrarTabela() {
+                var id = $('#searchById').val();
+                var nome = $('#searchByName').val().toLowerCase();
+                var email = $('#searchByEmail').val().toLowerCase();
+
+                $('#tabela-usuarios').DataTable().columns(0).search(id).columns(1).search(nome).columns(2).search(
+                    email).draw();
+            }
+
+            var remover_pesquisa_DataTable = document.querySelector('.dt-search');
+
+            if (remover_pesquisa_DataTable) {
+                remover_pesquisa_DataTable.parentNode.removeChild(remover_pesquisa_DataTable);
+            } else {
+                console.log("O elemento não foi encontrado.");
+            }
+            $('#searchForm').submit(function(event) {
+                event.preventDefault();
+                filtrarTabela();
+            });
+
+            $('#searchById, #searchByName, #searchByEmail').on('input', filtrarTabela);
+        });
+    </script>
 
 
 </body>
