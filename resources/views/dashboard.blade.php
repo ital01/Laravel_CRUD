@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.0/css/dataTables.bootstrap5.min.css">
 </head>
 
-<body class="">
+<body class="bg-white">
     @include('layouts.navigation')
 
     <header class="container">
