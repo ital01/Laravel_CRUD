@@ -10,31 +10,34 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.0/css/dataTables.bootstrap5.min.css">
 </head>
 
-<body class="bg-light">
+<body class="">
     @include('layouts.navigation')
 
     <header class="container">
+
+        <div class="w-25 text-center mx-auto">
+            @if (session('success'))
+                <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
+                    class="alert alert-success alert-dismissible fade show my-2 text-center" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
+                    class="alert alert-danger alert-dismissible fade show my-2 text-center" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+        </div>
+
         <div class="row justify-content-center">
             <div class="col-md-6">
-                @if (session('success'))
-                    <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                        class="alert alert-success alert-dismissible fade show my-2 text-center" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-
-                @if (session('error'))
-                    <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                        class="alert alert-danger alert-dismissible fade show my-2 text-center" role="alert">
-                        {{ session('error') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-
                 <div class="d-flex justify-content-center">
                     <!-- Formulário de envio -->
-                    <div class="card o-hidden border-0 shadow-lg my-2 w-75">
+                    <div class="card o-hidden border-0 shadow-lg my-2 w-75 p-3">
                         <div class="card-body">
                             <h3 class="mb-4">Adicionar cadastro</h3>
                             <form id="form" action="/enviar-form" method="POST">
@@ -59,7 +62,7 @@
             <div class="col-md-6">
                 <div class="d-flex justify-content-center">
                     <!-- Formulário de pesquisa -->
-                    <div class="card o-hidden border-0 shadow-lg my-2 w-75">
+                    <div class="card o-hidden border-0 shadow-lg my-2 w-75 p-3">
                         <div class="card-body">
                             <h3>Pesquisa</h3>
                             <form id="searchForm" class="py-1">
@@ -99,16 +102,18 @@
                     <th scope="col" class="text-center fs-5 text-white">Excluir</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="bg-light bg-gradient">
                 @foreach ($usuarios as $usuario)
                     <tr>
-                        <td>{{ $usuario->id }}</td>
-                        <td class="editable" data-field="nome" data-id="{{ $usuario->id }}">{{ $usuario->nome }}
+                        <td class="text-black">{{ $usuario->id }}</td>
+                        <td class="editable text-black" data-field="nome" data-id="{{ $usuario->id }}">
+                            {{ $usuario->nome }}
                         </td>
-                        <td class="editable" data-field="email" data-id="{{ $usuario->id }}">{{ $usuario->email }}
+                        <td class="editable text-black" data-field="email" data-id="{{ $usuario->id }}">
+                            {{ $usuario->email }}
                         </td>
                         <td class="text-center">
-                            <button class="btn btn-sm btn-info editar-btn"
+                            <button class="btn btn-sm btn-warning editar-btn text-black"
                                 data-id="{{ $usuario->id }}">Editar</button>
                         </td>
                         <td class="text-center">
@@ -201,7 +206,6 @@
         });
 
         $(document).ready(function() {
-
             function filtrarTabela() {
                 var id = $('#searchById').val();
                 var nome = $('#searchByName').val().toLowerCase();
@@ -211,19 +215,20 @@
                     email).draw();
             }
 
-            var remover_pesquisa_DataTable = document.querySelector('.dt-search');
+            var remover = document.querySelector('.dt-search');
 
-            if (remover_pesquisa_DataTable) {
-                remover_pesquisa_DataTable.parentNode.removeChild(remover_pesquisa_DataTable);
+            if (remover) {
+                remover.parentNode.removeChild(remover);
             } else {
                 console.log("O elemento não foi encontrado.");
             }
+
+            $('#searchById, #searchByName, #searchByEmail').on('input', filtrarTabela);
+
             $('#searchForm').submit(function(event) {
                 event.preventDefault();
                 filtrarTabela();
             });
-
-            $('#searchById, #searchByName, #searchByEmail').on('input', filtrarTabela);
         });
     </script>
 
