@@ -200,8 +200,8 @@
                 "url": "https://cdn.datatables.net/plug-ins/2.0.0/i18n/pt-BR.json"
             },
             "lengthMenu": [
-                [10, 25, 50, 100, -1],
-                [10, 25, 50, 100, "Todos"]
+                [5, 10, 25, 50, 100, -1],
+                [5, 10, 25, 50, 100, "Todos"]
             ]
         });
 
